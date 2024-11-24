@@ -7,6 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
+/.idea/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -15,8 +16,7 @@
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
+
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/asset-mapper ###
