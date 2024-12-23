@@ -6,6 +6,11 @@
 parameters:
 
 services:
+    # Déclarer ton contrôleur UserController pour l'injection
+    App\Controller\UserController:
+        arguments:
+            $authenticationManager: '@security.authentication_manager'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

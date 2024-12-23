@@ -19,6 +19,7 @@ final class ReservationController extends AbstractController
     {
         return $this->render('reservation/index.html.twig', [
             'reservations' => $reservationRepository->findAll(),
+
         ]);
     }
 

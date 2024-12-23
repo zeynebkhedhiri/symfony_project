@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    <h1>Login</h1>
+
+    <form id="login-form">
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+<script>
+    // This is an example of using fetch to submit the login form
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();  // Prevent default form submission
+
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+
+    fetch('/login', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email: email, password: password }),
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (data.token) {
+    // Token is generated and now you can save it in localStorage/sessionStorage if needed
+    localStorage.setItem('auth_token', data.token);
+
+    // Redirect to the appropriate page based on the 'redirect' URL
+    window.location.href = data.redirect;
+    } else {
+    // Handle error: invalid credentials or other errors
+    alert(data.error);
+    }
+    })
+    .catch(error => {
+    console.error('Error:', error);
+    });
+    });
+
+</script>
+{% endblock %}

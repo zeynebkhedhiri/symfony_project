@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app_symfony:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app_docker_symfony
+    depends_on:
+      - database
+      - mailer
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/symfony
+      - ./vhosts.conf:/etc/apache2/sites-enabled/000-default.conf
+    restart: always
+    networks:
+      - dev
+
+  database:
+    image: postgres:16-alpine
+    container_name: reservation_app-database
+    environment:
+      POSTGRES_USER: symfony_user
+      POSTGRES_PASSWORD: symfony_password
+      POSTGRES_DB: symfony_db
+    ports:
+      - "5432:5432"
+    networks:
+      - dev
+
+  mailer:
+    image: axllent/mailpit
+    container_name: reservation_app-mailer
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - dev
+
+networks:
+  dev:

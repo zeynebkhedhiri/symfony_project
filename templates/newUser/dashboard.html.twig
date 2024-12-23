@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block body %}
+    <h1>User Dashboard</h1>
+
+    <h2>Available Events</h2>
+    <ul>
+        {% for event in events %}
+            <li>
+                {{ event.name }} - {{ event.date }}
+                <a href="{{ path('app_reservation_new', { 'eventId': event.id }) }}">Reserve</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <script>const token = localStorage.getItem('auth_token');  // Retrieve the token
+
+        if (token) {
+            fetch('/user/dashboard', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token  // Add the token in the Authorization header
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Unauthorized');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle the response data here
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        } else {
+            console.log('No token found, redirecting to login.');
+            window.location.href = '/login/index';  // Redirect to login if no token exists
+        }
+    </script>
+{% endblock %}

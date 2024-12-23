@@ -12,8 +12,8 @@
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th>DateNaissance</th>
-                <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+                <th>name</th>
+                <td> {{ user.nom }} {{ user.prenom }} </td>
             </tr>
         </tbody>
     </table>
@@ -22,5 +22,5 @@
 
     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
 
-    {{ include('user/_delete_form.html.twig') }}
+    {{ include('newUser/_delete_form.html.twig') }}
 {% endblock %}

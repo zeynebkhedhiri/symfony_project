@@ -13,7 +13,7 @@ final class UserControllerTest extends WebTestCase
     private KernelBrowser $client;
     private EntityManagerInterface $manager;
     private EntityRepository $repository;
-    private string $path = '/user/';
+    private string $path = '/newUser/';
 
     protected function setUp(): void
     {
@@ -48,7 +48,7 @@ final class UserControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
 
         $this->client->submitForm('Save', [
-            'user[dateNaissance]' => 'Testing',
+            'newUser[dateNaissance]' => 'Testing',
         ]);
 
         self::assertResponseRedirects($this->path);
@@ -85,10 +85,10 @@ final class UserControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
 
         $this->client->submitForm('Update', [
-            'user[dateNaissance]' => 'Something New',
+            'newUser[dateNaissance]' => 'Something New',
         ]);
 
-        self::assertResponseRedirects('/user/');
+        self::assertResponseRedirects('/newUser/');
 
         $fixture = $this->repository->findAll();
 
@@ -107,7 +107,7 @@ final class UserControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
         $this->client->submitForm('Delete');
 
-        self::assertResponseRedirects('/user/');
+        self::assertResponseRedirects('/newUser/');
         self::assertSame(0, $this->repository->count([]));
     }
 }
